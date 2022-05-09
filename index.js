@@ -42,16 +42,7 @@ async function run() {
             res.send(result);
         });
 
-        //use post to get items by ids
-        // app.post('/itemByKeys', async(req, res) =>{
-        //     const keys = req.body;
-        //      const ids = keys.map(id => ObjectId(id));
-        //     const query = {_id: {$in: ids}}
-        //      const cursor = itemsCollection.find(query);
-        //      const items = await cursor.toArray();
-        //     console.log(keys);
-        //      res.send(items);
-        // });
+        
 
         //DELETE
         app.delete('/items/:id', async(req, res) =>{
@@ -59,6 +50,15 @@ async function run() {
             const query = {_id: ObjectId(id)};
             const result = await itemsCollection.deleteOne(query);
             res.send(result);
+        });
+
+        // Item Collection API
+
+        app.get('/myitem', async(req, res) =>{
+            const query = {};
+            const cursor = itemsCollection.find(query);
+            const item = await cursor.toArray();
+            res.send(item);
         });
 
 
