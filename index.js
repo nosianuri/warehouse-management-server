@@ -19,6 +19,8 @@ async function run() {
     try {
         await client.connect();
         const itemsCollection = client.db('warehouse').collection('items');
+        const manageCollection = client.db('warehouse').collection('manage')
+
         app.get('/items', async (req, res) => {
             const query = {};
             const cursor = itemsCollection.find(query);
@@ -40,6 +42,17 @@ async function run() {
             res.send(result);
         });
 
+        //use post to get items by ids
+        // app.post('/itemByKeys', async(req, res) =>{
+        //     const keys = req.body;
+        //      const ids = keys.map(id => ObjectId(id));
+        //     const query = {_id: {$in: ids}}
+        //      const cursor = itemsCollection.find(query);
+        //      const items = await cursor.toArray();
+        //     console.log(keys);
+        //      res.send(items);
+        // });
+
         //DELETE
         app.delete('/items/:id', async(req, res) =>{
             const id = req.params.id;
@@ -47,6 +60,14 @@ async function run() {
             const result = await itemsCollection.deleteOne(query);
             res.send(result);
         });
+
+
+        // manage Collection API
+        app.post('/manage', async(req, res) =>{
+            const manage = req.body;
+            const result = await manageCollection.insertOne(manage);
+            res.send (result);
+        })
     }
     finally {
 
