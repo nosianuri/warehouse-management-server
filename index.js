@@ -26,7 +26,7 @@ function verifyJWT(req, res, next) {
         next();
     })
 
-    
+
 }
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.sai9t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
@@ -92,8 +92,8 @@ async function run() {
                 const item = await cursor.toArray();
                 res.send(item);
             }
-            else{
-                res.status(403).send({message: 'forbidden access'})
+            else {
+                res.status(403).send({ message: 'forbidden access' })
             }
         });
 
